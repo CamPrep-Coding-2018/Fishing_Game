@@ -1,4 +1,4 @@
-class fish{
+class Fish{
 
 PVector fishPos;
 boolean moveDir; //False is left, True is right.
@@ -6,7 +6,7 @@ float fishSpeed;
 int[] fishColor;
 int fishy;
 float fishPath;
-
+int pathD;
   void fishSet(){
     fishPos = new PVector(0,0);
     fishColor = new int[3];
@@ -29,7 +29,7 @@ float fishPath;
       fishColor[2] = int(random(255));
       
       fishSpeed = random(1, 4);
-      
+      pathD = int(random(90,120));
       
   }
   
@@ -38,11 +38,13 @@ float fishPath;
     if (moveDir){ fishPos.x += fishSpeed;}
     if (!moveDir){ fishPos.x -= fishSpeed;}
     
-    fishPath = 40 * sin(fishPos.x / 120);
+    fishPath = 40 * sin(fishPos.x / pathD);
     
     fill(fishColor[0], fishColor[1], fishColor[2]);
-   
+    strokeWeight(3);
     ellipse(fishPos.x, fishPos.y + fishPath, 40, 20);
 
+    
+      
+    }
   }
-}
