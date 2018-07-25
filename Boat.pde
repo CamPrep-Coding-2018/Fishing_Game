@@ -1,5 +1,5 @@
 class Boat{
-  PVector boatPos; //Calculated from the bottom middle of the boat
+   //Calculated from the bottom middle of the boat
   float boatPath;
   
   void boatSet(){
