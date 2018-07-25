@@ -11,58 +11,53 @@ ArrayList<Fish> fishestodelete;
 
 
 
-void setup(){
-  size(1280,720);
+void setup() {
+  size(1280, 720);
   fishes = new ArrayList<Fish>();
   fishestodelete = new ArrayList<Fish>();
   hook = new Hook();
   playerBoat = new Boat();
-  
-  for(int i = 0; i < 10; i++) fishes.add(new Fish());
+
+  for (int i = 0; i < 10; i++) fishes.add(new Fish());
   for (Fish f : fishes) f.fishSet();
-  
-  
-  
+
+
+
   playerBoat.boatSet();
   spawnInter = millis();
 }
 
-void draw(){
-  
-  
-  background(0,100,255);
+void draw() {
+
+
+  background(0, 100, 255);
   playerBoat.boatDraw();
   hook.hookDraw();
-  
-    if(millis() > spawnInter + 3000){
-      Fish f = new Fish();
-      f.fishSet();
-      fishes.add(f);
-      spawnInter = millis(); 
-    }
-    for (Fish f : fishes) {
-    
-    f.fishDraw();
-    if(hook.hookHooked())hook.hookCaught();
-      
 
-    
-    if(f.fishPos.x > width || f.fishPos.x < 0){
+  if (millis() > spawnInter + 3000) {
+    Fish f = new Fish();
+    f.fishSet();
+    fishes.add(f);
+    spawnInter = millis();
+  }
+  for (Fish f : fishes) {
+
+    f.fishDraw();
+    if (hook.hookHooked()) hook.hookCaught();
+    if (f.fishPos.x > width || f.fishPos.x < 0) {
       fishestodelete.add(f);
     }
   }
   for (Fish f : fishestodelete) fishes.remove(f);
 
-    
+
   textSize(20);
-  fill(0,255,0);
+  fill(0, 255, 0);
   text("Score: " + score, 50, 100);
 }
-void keyPressed(){
+void keyPressed() {
   setKey(key, true);
 }
-void keyReleased(){
-  setKey(key,false);
-
-  
+void keyReleased() {
+  setKey(key, false);
 }
