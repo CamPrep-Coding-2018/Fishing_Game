@@ -28,11 +28,8 @@ class Hook {
   boolean hookHooked() {
     if (catchAble) {
       for (Fish f : fishes) {
-        PVector fishEye = f.fishPosPost.copy();
-        fishEye.y += 40 * sin(f.fishPosPre.x / f.pathD);
-        if (hookToFish(hookPos, fishEye, int(f.fishSize.x / 10))) {
-          f.fishPosPost.x = hookPos.x;
-          f.fishPosPost.y = hookPos.y - f.fishPosPost.y;
+        if (hookToFish(hookPos, f.fishEye, int(f.fishSize.x / 10), int(f.fishSize.y / 10))) {
+          f.fishPos = hookPos;
           hooked = true;
         }
         hooked = false;
@@ -42,13 +39,16 @@ class Hook {
   }
 
   boolean hookCaught() {
-    if (mousePressed) {
-      if (hooked) {
-        if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {
-          caught = true;
+    
+    if (key == ' ') {
+        if (hooked) {
+          if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {
+            caught = true;
+          }
         }
       }
-    } else caught = false;
-    return caught;
+      else caught = false;
+      return caught;
+    
   }
 }

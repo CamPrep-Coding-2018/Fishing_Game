@@ -1,10 +1,11 @@
 class Fish{
 
-PVector fishPos;
+PVector fishPosPre;
+PVector fishPosPost;
 boolean moveDir; //False is left, True is right.
 float fishSpeed;
 int[] fishColor;
-int fishy;
+
 float fishPath;
 int pathD;
 PVector fishSize;
@@ -14,23 +15,24 @@ boolean reeled;
 boolean reeling;
 
   void fishSet(){
-    fishPos = new PVector(0,0);
+    fishPosPre = new PVector(0,0);
+    fishPosPost = new PVector(0,0);
     fishColor = new int[3];
     fishEye = new PVector();
     fishSize = new PVector((int(random(40, 75))), int(random(25,50)));
     
     float initPosx = random(1);
       if (initPosx < .5){ 
-        fishPos.x = width;
+        fishPosPre.x = width;
         moveDir = false;
       }
       else {
-        fishPos.x = 0;
+        fishPosPre.x = 0;
         moveDir = true;
       }       
       
      float initPosy = int(random(1, 31));
-       fishPos.y = initPosy * 24;
+       fishPosPre.y = initPosy * 24;
        
       fishColor[0] = int(random(255));
       fishColor[1] = int(random(255));
@@ -45,18 +47,20 @@ boolean reeling;
     
     
     
-    if (moveDir){ fishPos.x += fishSpeed; fishEye.x = fishPos.x + fishSize.x * (3/4);}
-    if (!moveDir){ fishPos.x -= fishSpeed; fishEye.x = fishPos.x - fishSize.x * (3/4);}
+    if (moveDir){ fishPosPre.x += fishSpeed; fishEye.x = fishPosPre.x + fishSize.x * (3/4);}
+    if (!moveDir){ fishPosPre.x -= fishSpeed; fishEye.x = fishPosPre.x - fishSize.x * (3/4);}
     
-    fishPath = 40 * sin(fishPos.x / pathD);
+    fishPath = 40 * sin(fishPosPre.x / pathD);
+    fishPosPost.y = fishPosPre.y + fishPath;
+    fishPosPost.x = fishPosPre.x;
     
     fill(fishColor[0], fishColor[1], fishColor[2]);
     strokeWeight(3);
-    ellipse(fishPos.x, fishPos.y + fishPath, fishSize.x, fishSize.y); //Fish body
+    ellipse(fishPosPost.x, fishPosPost.y, fishSize.x, fishSize.y); //Fish body
     fill(255);
     
     
-    ellipse(fishEye.x, fishPos.y + fishPath, fishSize.x/10, fishSize.y/10); //Eye targets
+    ellipse(fishPosPost.x, fishPosPost.y, fishSize.x/10, fishSize.y/10); //eye/mouth targets
 
       
     }
@@ -69,7 +73,7 @@ boolean reeling;
   //  }
   //  void fishReeling(){
   //    if (caught){ 
-  //      fishPos = hookPos;
+  //      fishPosPre = hookPos;
   //      reeling = true;
   //  }
   //  else reeling = false;

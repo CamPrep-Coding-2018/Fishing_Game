@@ -1,5 +1,4 @@
 class Boat{
-   //Calculated from the bottom middle of the boat
   float boatPath;
   
   void boatSet(){
