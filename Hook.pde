@@ -5,10 +5,13 @@ class Hook {
   boolean hooked;
   boolean caught;
 
+  Fish on_line;
 
-  void hookSet() {
-  }
   void hookDraw() {
+    if(on_line != null) {
+     on_line.fishPos = hookPos.copy();
+    }
+    
     hookPos = new PVector(mouseX, mouseY);
     lastIn = new PVector ();
 
@@ -25,30 +28,31 @@ class Hook {
       text("Out of Bounds", mouseX, mouseY);
     }
   }
-  boolean hookHooked() {
+void hookHooked() {
     if (catchAble) {
+      if(on_line == null){
       for (Fish f : fishes) {
-        PVector fishEye = f.fishPosPost.copy();
-        fishEye.y += 40 * sin(f.fishPosPre.x / f.pathD);
-        if (hookToFish(hookPos, fishEye, int(f.fishSize.x / 10))) {
-          f.fishPosPost.x = hookPos.x;
-          f.fishPosPost.y = hookPos.y - f.fishPosPost.y;
-          hooked = true;
+        if (hookToFish(hookPos, f.fishEye, int(f.fishSize.x / 5))) {
+          f.caught = true;
+          on_line = f;
         }
-        hooked = false;
+        else f.caught = false;
       }
     }
-    return hooked;
+    }
+    
   }
 
-  boolean hookCaught() {
+  void hookCaught() {
     if (mousePressed) {
-      if (hooked) {
-        if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {
+      if (on_line != null) {
+        if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {         
+          fishestodelete.add(on_line);
+          on_line = null;
           caught = true;
         }
       }
-    } else caught = false;
-    return caught;
+    }else caught = false;
+
   }
 }
