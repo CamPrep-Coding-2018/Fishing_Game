@@ -8,6 +8,7 @@ int score = 0;
 PVector hookPos;
 PVector boatPos;
 ArrayList<Fish> fishestodelete;
+ArrayList<Fish> fishescaught;
 boolean reeling;
 
 
@@ -16,6 +17,7 @@ void setup() {
   size(1280, 720);
   fishes = new ArrayList<Fish>();
   fishestodelete = new ArrayList<Fish>();
+  fishescaught = new ArrayList<Fish>();
   hook = new Hook();
   playerBoat = new Boat();
 
@@ -25,6 +27,7 @@ void setup() {
 
 
   playerBoat.boatSet();
+  hook.hookSet();
   spawnInter = millis();
 }
 

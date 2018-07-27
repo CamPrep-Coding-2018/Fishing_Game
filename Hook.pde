@@ -1,58 +1,91 @@
 class Hook {
 
 
-  PVector lastIn;
   boolean hooked;
   boolean caught;
+  boolean casting;
+  int castTimer;
 
   Fish on_line;
 
+  void hookSet() {
+    hookPos = new PVector(boatPos.x, 0);
+
+    casting = false;
+  }
+
   void hookDraw() {
-    if(on_line != null) {
-     on_line.fishPos = hookPos.copy();
+
+    hookPos.x = boatPos.x;
+
+    if (on_line != null) {
+      on_line.fishPos = hookPos.copy();
     }
-    
-    hookPos = new PVector(mouseX, mouseY);
-    lastIn = new PVector ();
+
+    if (keyPressed && key == ' ' && !casting && hookPos.y <= 50) { 
+      casting = true;
+      castTimer = millis();
+    }
+    hookCast();
+
+    if (w_key){ hookPos.y -= 3; 
+    casting = false;
+    }
+
+
+
 
     strokeWeight(2);
-    if ((mouseX > boatPos.x - 100 && mouseX < boatPos.x + 100)) {
+    if ((hookPos.x > boatPos.x - 100 && hookPos.x < boatPos.x + 100)) {
       line(boatPos.x, boatPos.y, hookPos.x, hookPos.y);
 
       catchAble = true;
     } else {
 
-      catchAble = false;
-      line(boatPos.x, boatPos.y, lastIn.x, lastIn.y);
+      catchAble = false;    
+
       fill (255, 0, 0);
-      text("Out of Bounds", mouseX, mouseY);
+      text("Out of Bounds", hookPos.x, hookPos.y);
     }
   }
-void hookHooked() {
+
+  void hookHooked() {
     if (catchAble) {
-      if(on_line == null){
-      for (Fish f : fishes) {
-        if (hookToFish(hookPos, f.fishEye, int(f.fishSize.x / 5))) {
-          f.caught = true;
-          on_line = f;
+      if (on_line == null) {
+        for (Fish f : fishes) {
+          if (hookToFish(hookPos, f.fishEye, int(f.fishSize.x / 5))) {
+            f.caught = true;
+            on_line = f;
+          } else f.caught = false;
+          }
         }
-        else f.caught = false;
       }
     }
-    }
-    
-  }
+  
 
   void hookCaught() {
     if (mousePressed) {
       if (on_line != null) {
         if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {         
           fishestodelete.add(on_line);
+          fishescaught.add(on_line);
           on_line = null;
           caught = true;
+          score = fishescaught.size() * 10;
         }
       }
-    }else caught = false;
+    } else caught = false;
+  }
 
+  void hookCast() {
+
+
+    if (casting && on_line == null) {
+      if (millis() < castTimer + 3000) {
+        hookPos.y += 3;
+      } else {
+        casting = false;
+      }
+    }
   }
 }
