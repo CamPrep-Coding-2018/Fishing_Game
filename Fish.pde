@@ -1,5 +1,6 @@
 class Fish{
 
+boolean trash;
 PVector fishPos;
 PVector fishEye;
 int y;
@@ -17,11 +18,16 @@ boolean reeled;
 boolean reeling;
   
   void fishSet(){
+    
+    if(random(1) < .75) trash = false;
+    else trash = true;
+    
     y = height/2;
     fishPos = new PVector(0, 0); 
     fishColor = new int[3];
     fishEye = new PVector();
-    fishSize = new PVector((int(random(40, 75))), int(random(25,50)));
+    
+    fishSize = new PVector((int(random(50, 75))), int(random(25,35)));
     
     float initPosx = random(1);
       if (initPosx < .5){ 
@@ -48,7 +54,11 @@ boolean reeling;
   void fishDraw(){
     
   if(!caught){
+    if(!trash){
     fishPos.y = y + 60 * sin(fishPos.x / pathD); // Sinusoid for path
+    }
+    else fishPos.y = y;
+    
     fishEye = fishPos.copy();
     
     if (moveDir){ 
@@ -58,17 +68,26 @@ boolean reeling;
      fishPos.x -= fishSpeed;
   } 
 }    
-  else{
+  else {
     fishPos = hookPos;
     fishEye = hookPos;
   }
     
     
-    fill(fishColor[0], fishColor[1], fishColor[2]);
-    strokeWeight(3);
-    ellipse(fishPos.x, fishPos.y, fishSize.x, fishSize.y); //Fish body
+   
+    if(!trash){
+      fill(fishColor[0], fishColor[1], fishColor[2]);
+      strokeWeight(3);
+      ellipse(fishPos.x, fishPos.y, fishSize.x, fishSize.y); //Fish body
+    }
+    else{
+      fill(fishColor[0]);
+      strokeWeight(3);
+      rectMode(CENTER);
+      rect(fishPos.x, fishPos.y, fishSize.x, fishSize.y);
+      
+    }
     fill(255);
-
     ellipse(fishEye.x, fishEye.y, fishSize.x/5, fishSize.y/5); //eye/mouth targets
 
       

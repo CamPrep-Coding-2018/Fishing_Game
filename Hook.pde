@@ -51,14 +51,13 @@ class Hook {
 
   void hookHooked() {
     if (catchAble) {
-      if (on_line == null) {
         for (Fish f : fishes) {
-          if (hookToFish(hookPos, f.fishEye, int(f.fishSize.x / 5))) {
+          if ((hookToFish(hookPos, f.fishEye, int(f.fishSize.x / 5))) && on_line == null && !casting) {
             f.caught = true;
             on_line = f;
-          } else f.caught = false;
           }
-        }
+            else f.caught = false;
+          }
       }
     }
   
@@ -66,12 +65,14 @@ class Hook {
   void hookCaught() {
     if (mousePressed) {
       if (on_line != null) {
-        if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {         
+        if (hookPos.y <= boatPos.y + 45 && hookPos.x <= boatPos.x + 100 && hookPos.x >= boatPos.x - 100) {     
+          if(!on_line.trash) fishescaught.add(on_line);
+          else trashescaught.add(on_line);
+          
           fishestodelete.add(on_line);
-          fishescaught.add(on_line);
           on_line = null;
           caught = true;
-          score = fishescaught.size() * 10;
+          score = fishescaught.size() * 10 - trashescaught.size() * 100;
         }
       }
     } else caught = false;

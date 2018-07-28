@@ -1,5 +1,7 @@
 
+
 ArrayList<Fish> fishes;
+ArrayList<Fish> trashes;
 Hook hook;
 Boat playerBoat;
 boolean catchAble;
@@ -8,20 +10,24 @@ int score = 0;
 PVector hookPos;
 PVector boatPos;
 ArrayList<Fish> fishestodelete;
+ArrayList<Fish> trashescaught;
 ArrayList<Fish> fishescaught;
 boolean reeling;
 
 
 
 void setup() {
+
   size(1280, 720);
   fishes = new ArrayList<Fish>();
+  trashes = new ArrayList<Fish>();
   fishestodelete = new ArrayList<Fish>();
   fishescaught = new ArrayList<Fish>();
+  trashescaught = new ArrayList<Fish>();
   hook = new Hook();
   playerBoat = new Boat();
 
-  for (int i = 0; i < 10; i++) fishes.add(new Fish());
+  for (int i = 0; i < 9; i++) fishes.add(new Fish());
   for (Fish f : fishes) f.fishSet();
 
 
@@ -38,6 +44,8 @@ void draw() {
   playerBoat.boatDraw();
   hook.hookDraw();
 
+  hook.hookCaught();
+
   if (millis() > spawnInter + 1000) {
     Fish f = new Fish();
     f.fishSet();
@@ -49,20 +57,19 @@ void draw() {
     
     hook.hookHooked();
     f.fishDraw();
-    hook.hookCaught();
-    
-    
-    
-    if (f.fishPos.x > width || f.fishPos.x < 0 ) {
+   
+   
+    if (f.fishPos.x > width || f.fishPos.x < 0) {
       fishestodelete.add(f);
     }
-    
   }
+  
   for (Fish f : fishestodelete) fishes.remove(f);
 
 
-  textSize(20);
-  fill(0, 255, 0);
+  textSize(30);
+  if(score < 0) fill(255, 0, 0);
+  else          fill(0,255,0);
   text("Score: " + score, 50, 100);
 }
 void keyPressed() {

@@ -2,7 +2,7 @@ class Boat{
   float boatPath;
   
   void boatSet(){
-    boatPos = new PVector(0,-10);
+    boatPos = new PVector(width/2, -10);
     
   }
   void boatDraw(){
@@ -10,7 +10,7 @@ class Boat{
     boatPath = sin(boatPos.x / 20);
 
     
-    if (d_key) {
+    if (d_key && !caught) {
       boatPos.x += 3 ;
       boatPos.y += boatPath;
     }
