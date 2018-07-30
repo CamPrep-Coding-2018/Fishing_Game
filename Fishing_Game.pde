@@ -1,5 +1,5 @@
 
-
+PImage background;
 ArrayList<Fish> fishes;
 ArrayList<Fish> trashes;
 Hook hook;
@@ -13,6 +13,7 @@ ArrayList<Fish> fishestodelete;
 ArrayList<Fish> trashescaught;
 ArrayList<Fish> fishescaught;
 boolean reeling;
+String playerText;
 
 
 
@@ -24,9 +25,10 @@ void setup() {
   fishestodelete = new ArrayList<Fish>();
   fishescaught = new ArrayList<Fish>();
   trashescaught = new ArrayList<Fish>();
+  background = loadImage("underwaterbackground.jpeg");
   hook = new Hook();
   playerBoat = new Boat();
-
+  playerText = "";
   for (int i = 0; i < 9; i++) fishes.add(new Fish());
   for (Fish f : fishes) f.fishSet();
 
@@ -38,15 +40,18 @@ void setup() {
 }
 
 void draw() {
-
-
-  background(0, 100, 255);
+  
+  background(background);
   playerBoat.boatDraw();
   hook.hookDraw();
+  textSize(30);
+  text(playerText, width - 200, height - 600);
 
-  hook.hookCaught();
+  
 
-  if (millis() > spawnInter + 1000) {
+  
+
+  if (millis() > spawnInter + 2000) {
     Fish f = new Fish();
     f.fishSet();
     fishes.add(f);
@@ -55,8 +60,13 @@ void draw() {
   
   for (Fish f : fishes) {
     
+    
     hook.hookHooked();
+    hook.hookReel(); //It's not a bug its a feature'
+    hook.hookCaught();
+    
     f.fishDraw();
+    
    
    
     if (f.fishPos.x > width || f.fishPos.x < 0) {
@@ -73,8 +83,16 @@ void draw() {
   text("Score: " + score, 50, 100);
 }
 void keyPressed() {
-  setKey(key, true);
+
+  if (key == CODED) setCodedKey(keyCode, true);
+  else setKey(key, true);
 }
 void keyReleased() {
-  setKey(key, false);
+  
+    TextInput();
+
+  
+  
+  if (key == CODED) setCodedKey(keyCode, false);
+  else setKey(key, false);
 }

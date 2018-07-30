@@ -10,7 +10,7 @@ class Boat{
     boatPath = sin(boatPos.x / 20);
 
     
-    if (d_key && !caught) {
+    if (d_key) {
       boatPos.x += 3 ;
       boatPos.y += boatPath;
     }
@@ -18,7 +18,7 @@ class Boat{
       boatPos.x -= 3 ;
       boatPos.y -= boatPath;
     }
-    fill(#3E2007);
+    fill(#7C4F2A);
     ellipse(boatPos.x, boatPos.y, 200, 90);
   }
   
