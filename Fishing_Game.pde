@@ -24,16 +24,16 @@ SoundFile reelingsound;
 PFont gameFont;
 
 //replace the sample.mp3 with your audio file name here
-String audioName = "DockPlayground.mp3";
+String audioName = "Data/DockPlayground.mp3";
 String path;
 //String audioName2 = "Reeling.mp3";
 //String reelingpath;
 
 
 void setup() {
+  size(1280, 720, P2D);
   gameFont = loadFont("PTMono-Bold-40.vlw");
   textFont(gameFont, 32);
-  size(1280, 720);
   fishes = new ArrayList<Fish>();
   trashes = new ArrayList<Fish>();
   fishestodelete = new ArrayList<Fish>();
@@ -60,7 +60,6 @@ void setup() {
 }
 
 void draw() {
-
 
   background(background);
 

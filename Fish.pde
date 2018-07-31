@@ -78,8 +78,7 @@ class Fish {
     fill(255);
     ellipse(fishEye.x, fishEye.y, fishSize.x/5, fishSize.y/5); //eye/mouth targets
     textSize(20);
-    textMode(CENTER);
-
+    
     if(hooked) text(str(fishProb1) + " * " + str(fishProb2), fishPos.x - (fishSize.x/2), fishPos.y + 40);
   }
 }

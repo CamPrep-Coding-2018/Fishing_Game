@@ -100,7 +100,7 @@ class Hook {
   void hookCast() {
 
     if (casting && on_line == null) {
-      if (millis() < castTimer + 3500) {
+      if (hookPos.y < height*.8) { // millis() < castTimer + 3500) {
         hookPos.y += 3;
       } else {
         casting = false;
