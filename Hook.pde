@@ -13,7 +13,7 @@ class Hook {
 
   void hookSet() {
     hookPos = new PVector(boatPos.x, 0);
-    difficulty = .3;
+    difficulty = .4; // Modify 
     casting = false;
     reeling = false;
   }
@@ -76,24 +76,21 @@ class Hook {
   void hookCaught() {
     if (on_line != null) {
       if (hookPos.y <= boatPos.y + 45) {  
-        if (int(playerText) == on_line.fishAns) {
+        if(int(playerText) != on_line.fishAns){
+          on_line.hooked = false;
+          on_line = null;
+          Display_Text("Fish Lost!", "red");
+          
+          playerText = "";
+        }
+        else if (int(playerText) == on_line.fishAns) {
           
           fishescaught.add(on_line);
           fishestodelete.add(on_line);
           on_line = null;
-          score = fishescaught.size() * 10 - trashescaught.size() * 50;
+          score = fishescaught.size() * 10;
+          Display_Text("Fish Caught!", "green");
           playerText = "";
-        }
-        
-        else{
-          on_line.hooked = false;
-          on_line = null;
-          textSize(200);
-          fill(255,0,0);
-          text("Fish Lost!", 200, height/2);
-          
-          playerText = "";
-          
           
         }
       }
@@ -116,6 +113,7 @@ class Hook {
       if(hookPos.y >= boatPos.y + 45){
         hookPos.y -= difficulty;
         reeling = true;
+        //reelingsound.play();
       }
       else if(hookPos.y <= boatPos.y){
         reeling = false;

@@ -28,8 +28,8 @@ class Fish {
     fishPos = new PVector(0, 0); 
     fishColor = new int[3];
     fishEye = new PVector();
-    fishProb1 = int(random(23));
-    fishProb2 = int(random(23));
+    fishProb1 = int(random(15));
+    fishProb2 = int(random(15));
     fishAns = fishProb1 * fishProb2;
 
     fishSize = new PVector((int(random(60, 100))), int(random(25, 45)));
@@ -43,7 +43,7 @@ class Fish {
       moveDir = true;
     }       
 
-    y = int(random(3, 28));
+    y = int(random(3, 25));
     y = y * 24;
 
     fishColor[0] = int(random(20));
@@ -80,6 +80,6 @@ class Fish {
     textSize(20);
     textMode(CENTER);
 
-    text(str(fishProb1) + " * " + str(fishProb2), fishPos.x - (fishSize.x/2), fishPos.y + 40);
+    if(hooked) text(str(fishProb1) + " * " + str(fishProb2), fishPos.x - (fishSize.x/2), fishPos.y + 40);
   }
 }

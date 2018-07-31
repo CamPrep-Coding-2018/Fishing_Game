@@ -1,5 +1,5 @@
 String TextInput(){
-if(playerText.length() <= 5){
+ if(playerText.length() <= 5){
   
   if (one_key){
     playerText = playerText + "1";
